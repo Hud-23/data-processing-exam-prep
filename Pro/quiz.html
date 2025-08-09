@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Processing Exam Prep</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #2c3e50);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50, #4a6491);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .unit-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            background: #f8f9fa;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .unit-tab {
+            padding: 15px 20px;
+            cursor: pointer;
+            background: #e9ecef;
+            border-right: 1px solid #ddd;
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .unit-tab:hover {
+            background: #dee2e6;
+        }
+        
+        .unit-tab.active {
+            background: #4a6491;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .unit-content {
+            display: none;
+        }
+        
+        .unit-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .question-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid #4a6491;
+        }
+        
+        .question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option:hover {
+            background: #e9ecef;
+            border-color: #4a6491;
+        }
+        
+        .option.selected {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+        
+        .option-letter {
+            background: #4a6491;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        button {
+            background: #4a6491;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #3a5178;
+            transform: translateY(-2px);
+        }
+        
+        .score-display {
+            background: #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .score-display.good {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .score-display.average {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .score-display.poor {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .explanation {
+            background: #f8f9fa;
+            border-left: 4px solid #4a6491;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: #495057;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .unit-tabs {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Data Processing Exam Prep</h1>
+            <div class="subtitle">Test your knowledge across 8 units of data processing fundamentals</div>
+        </header>
+        
+        <div class="unit-tabs">
+            <div class="unit-tab active" data-unit="1">Unit 1</div>
+            <div class="unit-tab" data-unit="2">Unit 2</div>
+            <div class="unit-tab" data-unit="3">Unit 3</div>
+            <div class="unit-tab" data-unit="4">Unit 4</div>
+            <div class="unit-tab" data-unit="5">Unit 5</div>
+            <div class="unit-tab" data-unit="6">Unit 6</div>
+            <div class="unit-tab" data-unit="7">Unit 7</div>
+            <div class="unit-tab" data-unit="8">Unit 8</div>
+        </div>
+        
+        <div class="content">
+            <!-- Unit 1 Content -->
+            <div class="unit-content active" id="unit1">
+                <h2>Unit 1: Introduction to Data Processing</h2>
+                
+                <div class="question-card">
+                    <div class="question">1. What is the primary difference between data and information?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>Data is raw facts, while information is processed data that is meaningful</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Data is always digital, while information is always analog</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Data is used for decision making, while information is not</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Data is stored in computers, while information is stored on paper</div>
+                        </div>
+                    </div>
+                    <div class="explanation">Data refers to raw facts about an object, which are meaningless until processed. Information is the outcome of processed data that is used for decision making.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">2. Which of the following is NOT a characteristic of computers?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Speed</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Accuracy</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">C</div>
+                            <div>Emotional Intelligence</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Storage Capability</div>
+                        </div>
+                    </div>
+                    <div class="explanation">Computers have characteristics like speed, accuracy, storage, consistency, and repetitiveness, but they do not possess emotional intelligence as they are machines that follow programmed instructions.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">3. What is the primary purpose of Electronic Data Processing (EDP)?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>To replace human workers entirely</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">B</div>
+                            <div>To convert raw facts into useful information through automated processes</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>To create entertainment software</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>To design computer hardware</div>
+                        </div>
+                    </div>
+                    <div class="explanation">Electronic Data Processing (EDP) is any computer automated process that converts raw facts into useful information through a well-defined procedure.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">4. Which type of computer represents data as physical quantities like voltage or distance?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>Analog Computer</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Digital Computer</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Hybrid Computer</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Mainframe Computer</div>
+                        </div>
+                    </div>
+                    <div class="explanation">An analog computers represent data as physical quantities such as voltage, distance, position, or other physical quantities. Digital computers represent data as discrete binary digits (0s and 1s).</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">5. Which of the following is a key benefit of using computers in business?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Eliminating the need for human employees</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">B</div>
+                            <div>Improved decision making through timely and accurate information</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Reducing the need for security measures</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Making all business processes more complex</div>
+                        </div>
+                    </div>
+                    <div class="explanation">Computers in business provide benefits like improved customer relations, increased productivity, improved cash flows, better access to information, systems integration, and improved decision making through timely and accurate information.</div>
+                </div>
+                
+                <div class="controls">
+                    <button id="check1">Check Answers</button>
+                    <div id="score1" class="score-display" style="display: none;"></div>
+                </div>
+            </div>
+            
+            <!-- Unit 2 Content -->
+            <div class="unit-content" id="unit2">
+                <h2>Unit 2: Hardware Support in Data Processing</h2>
+                
+                <div class="question-card">
+                    <div class="question">1. Which component is considered the "brain" of the computer?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>Central Processing Unit (CPU)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Random Access Memory (RAM)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Hard Disk Drive (HDD)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Motherboard</div>
+                        </div>
+                    </div>
+                    <div class="explanation">The CPU is considered the brain of the computer where data is manipulated. It consists of the arithmetic and logic unit (ALU), control unit, and memory unit.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">2. Which type of memory is volatile and loses its contents when power is turned off?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>Random Access Memory (RAM)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Read-Only Memory (ROM)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Hard Disk</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>USB Flash Drive</div>
+                        </div>
+                    </div>
+                    <div class="explanation">RAM is volatile memory that loses its contents when the computer is turned off or loses power. ROM, hard disks, and USB drives are non-volatile storage that retain data even without power.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">3. Which input device is commonly used with handheld devices and can be moved with fingers or palm?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Mouse</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">B</div>
+                            <div>Trackball</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Joystick</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Scanner</div>
+                        </div>
+                    </div>
+                    <div class="explanation">A trackball is a variant of the mouse that can be moved on a stationary device and is rotated with fingers or palm. It is commonly used with handheld devices.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">4. Which component of the CPU is responsible for performing arithmetic and logical operations?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Control Unit</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">B</div>
+                            <div>Arithmetic and Logic Unit (ALU)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Registers</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Cache Memory</div>
+                        </div>
+                    </div>
+                    <div class="explanation">The Arithmetic and Logic Unit (ALU) is the electronic circuitry within the CPU that performs arithmetic operations (addition, subtraction, multiplication, division) and logical operations (AND, OR, NOT, comparisons).</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">5. Which storage device uses flash memory and has no moving parts?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Hard Disk Drive (HDD)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Optical Disk (CD/DVD)</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">C</div>
+                            <div>Solid State Drive (SSD)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Magnetic Tape</div>
+                        </div>
+                    </div>
+                    <div class="explanation">Solid State Drives (SSDs) use flash memory and have no moving parts, unlike HDDs which have spinning disks. This makes SSDs faster, more reliable, and less prone to physical damage.</div>
+                </div>
+                
+                <div class="controls">
+                    <button id="check2">Check Answers</button>
+                    <div id="score2" class="score-display" style="display: none;"></div>
+                </div>
+            </div>
+            
+            <!-- Unit 3 Content -->
+            <div class="unit-content" id="unit3">
+                <h2>Unit 3: Software Support in Data Processing</h2>
+                
+                <div class="question-card">
+                    <div class="question">1. Which type of software manages the resources of the computer and controls hardware operations?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>Operating System</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Word Processor</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Spreadsheet Software</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Database Management System</div>
+                        </div>
+                    </div>
+                    <div class="explanation">An operating system is software that manages the resources of the computer and controls hardware operations. It acts as an interface between the hardware and the user or application software.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">2. Which software is used for creating and editing text documents?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>Word Processing Software</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Spreadsheet Software</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Database Management Software</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Presentation Graphics Software</div>
+                        </div>
+                    </div>
+                    <div class="explanation">Word processing software is used for creating, editing, formatting, and printing text documents. Examples include Microsoft Word, WordPerfect, and PageMaker.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">3. Which type of software acts as a translator between hardware devices and the software that uses them?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>Device Driver</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Utility Program</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Application Software</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Operating System</div>
+                        </div>
+                    </div>
+                    <div class="explanation">A device driver acts as a translator between the hardware and the software that uses the devices. It allows the operating system and other software to communicate with hardware devices like printers, keyboards, and mice.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">4. Which software is used for organizing, storing, and retrieving large amounts of data efficiently?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Word Processor</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Spreadsheet Software</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">C</div>
+                            <div>Database Management System (DBMS)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Presentation Graphics Software</div>
+                        </div>
+                    </div>
+                    <div class="explanation">A Database Management System (DBMS) is software that organizes, stores, and retrieves large amounts of data efficiently. It provides facilities for data entry, retrieval, updating, and administration of databases.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">5. Which of the following is an advantage of using application packages?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>Quicker and possibly cheaper implementation</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Eliminates the need for customization</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Requires no technical expertise</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Always fits perfectly with existing systems</div>
+                        </div>
+                    </div>
+                    <div class="explanation">Advantages of application packages include quicker and possibly cheaper implementation, maximized system design and programming, provided system documentation, portability between computer systems, and efficiency in terms of speed, storage, and accuracy.</div>
+                </div>
+                
+                <div class="controls">
+                    <button id="check3">Check Answers</button>
+                    <div id="score3" class="score-display" style="display: none;"></div>
+                </div>
+            </div>
+            
+            <!-- Unit 4 Content -->
+            <div class="unit-content" id="unit4">
+                <h2>Unit 4: Filing and Data Processing Techniques</h2>
+                
+                <div class="question-card">
+                    <div class="question">1. Which file organization method stores records in a particular order, such as by customer number?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Serial File Organization</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">B</div>
+                            <div>Sequential File Organization</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Indexed Sequential Organization</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Direct Random File Organization</div>
+                        </div>
+                    </div>
+                    <div class="explanation">Sequential file organization stores records in a particular order, such as by customer number. This method is identical to serial access except that the records are stored in a specific order.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">2. Which type of file contains relatively permanent records that are updated periodically?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Transaction File</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">B</div>
+                            <div>Master File</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Program File</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>ASCII File</div>
+                        </div>
+                    </div>
+                    <div class="explanation">A master file is a collection of relatively permanent records that are updated periodically. Once a record has been added to a master file, it remains in the system indefinitely, though its values may change over time.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">3. Which data processing technique collects transaction data over a period and processes it all at once?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>Batch Processing</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Online Processing</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Real-time Processing</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Distributed Processing</div>
+                        </div>
+                    </div>
+                    <div class="explanation">Batch processing is a data processing method in which transaction data is collected over a period (e.g., a month for payroll processing) and then processed all at once as a batch to update the master file.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">4. Which file organization method uses both sequential and direct access methods?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Serial File Organization</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Sequential File Organization</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">C</div>
+                            <div>Indexed Sequential Organization</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Direct Random File Organization</div>
+                        </div>
+                    </div>
+                    <div class="explanation">Indexed Sequential Organization uses both sequential and direct access methods. It allows sequential file manipulation as records are stored in ascending order of key field, and also enables direct access using an index.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">5. Which data processing technique processes data immediately as it is captured?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Batch Processing</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">B</div>
+                            <div>Online Processing</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Distributed Processing</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Transaction Processing</div>
+                        </div>
+                    </div>
+                    <div class="explanation">Online processing is a method of data processing where data about a single transaction is processed immediately as it is captured. This allows transactions to be entered directly into the system as they occur, updating the master file immediately.</div>
+                </div>
+                
+                <div class="controls">
+                    <button id="check4">Check Answers</button>
+                    <div id="score4" class="score-display" style="display: none;"></div>
+                </div>
+            </div>
+            
+            <!-- Unit 5 Content -->
+            <div class="unit-content" id="unit5">
+                <h2>Unit 5: Fundamentals of Databases for Data Processing</h2>
+                
+                <div class="question-card">
+                    <div class="question">1. Which of the following is the smallest logical structure of storage in a database?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>Field</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Record</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Table</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Database</div>
+                        </div>
+                    </div>
+                    <div class="explanation">A field represents one related part of a table and is the smallest logical structure of storage in a database. It holds one piece of information about an item or subject.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">2. Which key uniquely identifies each record in a table?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>Primary Key</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Foreign Key</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Candidate Key</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Alternate Key</div>
+                        </div>
+                    </div>
+                    <div class="explanation">A primary key is a field or set of fields that uniquely identifies each record in a table. No two records in the table can have the same value for the primary key, and it cannot accept null values.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">3. Which database model represents real-world objects as entities and their associations as relationships?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>Entity-Relationship Model</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Relational Model</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Hierarchical Model</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Network Model</div>
+                        </div>
+                    </div>
+                    <div class="explanation">The Entity-Relationship (E-R) model views the real world as a set of basic objects (entities), their characteristics (attributes), and associations among these objects (relationships). It is used for conceptual database design.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">4. Which component of a database system manages the data and provides an interface between the database and users?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>Database Management System (DBMS)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Data Dictionary</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Database Schema</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Query Language</div>
+                        </div>
+                    </div>
+                    <div class="explanation">A Database Management System (DBMS) is a software system that manages the data in the database. It provides an interface between the database and the user or application programs.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">5. Which of the following is NOT a characteristic of information?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Accuracy</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Timeliness</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">C</div>
+                            <div>Volume</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Relevance</div>
+                        </div>
+                    </div>
+                    <div class="explanation">Information must possess qualities such as accuracy, timeliness, completeness, precision, and relevance. Volume is not a characteristic of information; rather, it refers to the quantity of data.</div>
+                </div>
+                
+                <div class="controls">
+                    <button id="check5">Check Answers</button>
+                    <div id="score5" class="score-display" style="display: none;"></div>
+                </div>
+            </div>
+            
+            <!-- Unit 6 Content -->
+            <div class="unit-content" id="unit6">
+                <h2>Unit 6: Data Communications and Networks</h2>
+                
+                <div class="question-card">
+                    <div class="question">1. Which network type typically occupies a room or building and includes a group of PCs that share a circuit?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>Local Area Network (LAN)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Metropolitan Area Network (MAN)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Wide Area Network (WAN)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Backbone Network</div>
+                        </div>
+                    </div>
+                    <div class="explanation">A Local Area Network (LAN) typically occupies a room or building and includes a group of PCs that share a circuit. LANs are used to connect devices within a limited geographical area.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">2. Which layer of the OSI model is responsible for routing decisions?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Physical Layer</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Data Link Layer</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">C</div>
+                            <div>Network Layer</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Transport Layer</div>
+                        </div>
+                    </div>
+                    <div class="explanation">The Network Layer (Layer 3) of the OSI model is responsible for making routing decisions. It determines the path that data will take to reach its destination.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">3. Which protocol suite is used on the Internet?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>TCP/IP</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>OSI</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>IPX/SPX</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>AppleTalk</div>
+                        </div>
+                    </div>
+                    <div class="explanation">TCP/IP (Transmission Control Protocol/Internet Protocol) is the protocol suite used on the Internet. It consists of five layers: Application, Transport, Network, Data Link, and Physical.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">4. Which network component is responsible for moving information between networks?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Server</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Client</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">C</div>
+                            <div>Router</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Switch</div>
+                        </div>
+                    </div>
+                    <div class="explanation">Routers are specialized devices responsible for moving information between networks. They operate at the Network Layer of the OSI model and make routing decisions based on IP addresses.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">5. Which type of network uses Internet technology to provide customer access to secure corporate websites?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Intranet</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">B</div>
+                            <div>Extranet</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>LAN</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>WAN</div>
+                        </div>
+                    </div>
+                    <div class="explanation">An extranet uses Internet technology to provide customer access to secure corporate websites. Extranet access is usually controlled using passwords or other authentication methods.</div>
+                </div>
+                
+                <div class="controls">
+                    <button id="check6">Check Answers</button>
+                    <div id="score6" class="score-display" style="display: none;"></div>
+                </div>
+            </div>
+            
+            <!-- Unit 7 Content -->
+            <div class="unit-content" id="unit7">
+                <h2>Unit 7: Security Considerations in Data Processing</h2>
+                
+                <div class="question-card">
+                    <div class="question">1. Which of the following is NOT part of the CIA triad of data security?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Confidentiality</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Integrity</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">C</div>
+                            <div>Accessibility</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Availability</div>
+                        </div>
+                    </div>
+                    <div class="explanation">The CIA triad of data security consists of Confidentiality, Integrity, and Availability. Accessibility is not part of the CIA triad, though it is related to the Availability principle.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">2. Which type of attack involves carefully targeted digital messages to trick people into clicking on malicious links?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>Phishing Attack</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Ransomware Attack</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Cyber-physical Attack</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>State-sponsored Attack</div>
+                        </div>
+                    </div>
+                    <div class="explanation">Phishing attacks involve carefully targeted digital messages transmitted to fool people into clicking on a link that can install malware or expose sensitive data.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">3. Which security measure involves restricting access to users who have been granted access to information?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>Access Control</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Data Encryption</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Email Security</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Risk Assessment</div>
+                        </div>
+                    </div>
+                    <div class="explanation">Access Control security involves restricting access of users who have been granted access to information, thereby monitoring who has access to particular data.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">4. Which security measure protects data by converting it into a coded format that can only be read with the correct key?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Firewall</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">B</div>
+                            <div>Data Encryption</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Antivirus Protection</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Regular Backups</div>
+                        </div>
+                    </div>
+                    <div class="explanation">Data encryption protects data by converting it into a coded format that can only be read with the correct decryption key. This prevents unauthorized access to sensitive information.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">5. Which security measure involves making copies of data to prevent loss in case of system failure?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Strong Firewall</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Antivirus Protection</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">C</div>
+                            <div>Regular Backups</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Access Control</div>
+                        </div>
+                    </div>
+                    <div class="explanation">Regular backups involve making copies of data and storing them in a safe location to prevent loss in case of system failure, accidental deletion, or other disasters.</div>
+                </div>
+                
+                <div class="controls">
+                    <button id="check7">Check Answers</button>
+                    <div id="score7" class="score-display" style="display: none;"></div>
+                </div>
+            </div>
+            
+            <!-- Unit 8 Content -->
+            <div class="unit-content" id="unit8">
+                <h2>Unit 8: Information Systems in Data Processing</h2>
+                
+                <div class="question-card">
+                    <div class="question">1. Which type of information system processes routine transactions necessary to conduct business?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>Transaction Processing System (TPS)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Management Information System (MIS)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Decision Support System (DSS)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Executive Information System (EIS)</div>
+                        </div>
+                    </div>
+                    <div class="explanation">A Transaction Processing System (TPS) is an organized collection of people, procedures, software, databases, and devices used to record completed business transactions. It processes routine transactions necessary to conduct business.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">2. Which type of information system provides information to managers to help them make informed decisions?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Transaction Processing System (TPS)</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">B</div>
+                            <div>Management Information System (MIS)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Office Automation System (OAS)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Executive Information System (EIS)</div>
+                        </div>
+                    </div>
+                    <div class="explanation">A Management Information System (MIS) provides information to managers to help them make informed decisions. It supports the managers in the decision-making process and enhances their productivity and performance.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">3. Which type of information system supports problem-specific decision making using mathematical or logical models?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Transaction Processing System (TPS)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Management Information System (MIS)</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">C</div>
+                            <div>Decision Support System (DSS)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Office Automation System (OAS)</div>
+                        </div>
+                    </div>
+                    <div class="explanation">A Decision Support System (DSS) supports problem-specific decision making by applying mathematical or logical models and interactions to solve problems. It is user-friendly and highly interactive.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">4. Which specialized information system manages and coordinates all resources, information, and functions of a business from shared data stores?</div>
+                    <div class="options">
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">A</div>
+                            <div>Enterprise Resource Planning (ERP)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Expert System</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Electronic Commerce (E-commerce)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">D</div>
+                            <div>Executive Information System (EIS)</div>
+                        </div>
+                    </div>
+                    <div class="explanation">Enterprise Resource Planning (ERP) is a computer software system that manages and coordinates all resources, information, and functions of a business from shared data stores. It integrates various business processes.</div>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question">5. Which type of information system provides summarized information in a convenient form to top-level managers?</div>
+                    <div class="options">
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">A</div>
+                            <div>Transaction Processing System (TPS)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">B</div>
+                            <div>Management Information System (MIS)</div>
+                        </div>
+                        <div class="option" data-answer="wrong">
+                            <div class="option-letter">C</div>
+                            <div>Decision Support System (DSS)</div>
+                        </div>
+                        <div class="option" data-answer="correct">
+                            <div class="option-letter">D</div>
+                            <div>Executive Information System (EIS)</div>
+                        </div>
+                    </div>
+                    <div class="explanation">An Executive Information System (EIS) provides summarized information in a convenient form to top-level managers. It is designed to facilitate access to information quickly and effectively for senior managers.</div>
+                </div>
+                
+                <div class="controls">
+                    <button id="check8">Check Answers</button>
+                    <div id="score8" class="score-display" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Data Processing Exam Prep &copy; 2024 | Designed for Copperbelt University Students</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Unit tab switching
+            const unitTabs = document.querySelectorAll('.unit-tab');
+            const unitContents = document.querySelectorAll('.unit-content');
+            
+            unitTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const unitId = tab.getAttribute('data-unit');
+                    
+                    // Remove active class from all tabs and contents
+                    unitTabs.forEach(t => t.classList.remove('active'));
+                    unitContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    tab.classList.add('active');
+                    document.getElementById(`unit${unitId}`).classList.add('active');
+                });
+            });
+            
+            // Option selection
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.addEventListener('click', () => {
+                    // Remove selected class from siblings
+                    const siblings = option.parentNode.querySelectorAll('.option');
+                    siblings.forEach(sib => sib.classList.remove('selected'));
+                    
+                    // Add selected class to clicked option
+                    option.classList.add('selected');
+                });
+            });
+            
+            // Check answers for each unit
+            for (let i = 1; i <= 8; i++) {
+                const checkButton = document.getElementById(`check${i}`);
+                checkButton.addEventListener('click', () => checkAnswers(i));
+            }
+            
+            function checkAnswers(unitNumber) {
+                const unitContent = document.getElementById(`unit${unitNumber}`);
+                const questionCards = unitContent.querySelectorAll('.question-card');
+                let correctCount = 0;
+                let totalQuestions = questionCards.length;
+                
+                questionCards.forEach(card => {
+                    const options = card.querySelectorAll('.option');
+                    let isAnswered = false;
+                    
+                    options.forEach(option => {
+                        if (option.classList.contains('selected')) {
+                            isAnswered = true;
+                            if (option.getAttribute('data-answer') === 'correct') {
+                                option.classList.add('correct');
+                                correctCount++;
+                            } else {
+                                option.classList.add('incorrect');
+                                // Highlight the correct answer
+                                options.forEach(opt => {
+                                    if (opt.getAttribute('data-answer') === 'correct') {
+                                        opt.classList.add('correct');
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    
+                    if (!isAnswered) {
+                        // Highlight the correct answer if not answered
+                        options.forEach(opt => {
+                            if (opt.getAttribute('data-answer') === 'correct') {
+                                opt.classList.add('correct');
+                            }
+                        });
+                    }
+                });
+                
+                // Display score
+                const scoreDisplay = document.getElementById(`score${unitNumber}`);
+                const percentage = Math.round((correctCount / totalQuestions) * 100);
+                
+                let scoreClass = '';
+                let scoreMessage = '';
+                
+                if (percentage >= 80) {
+                    scoreClass = 'good';
+                    scoreMessage = `Excellent! You scored ${correctCount} out of ${totalQuestions} (${percentage}%)`;
+                } else if (percentage >= 60) {
+                    scoreClass = 'average';
+                    scoreMessage = `Good job! You scored ${correctCount} out of ${totalQuestions} (${percentage}%)`;
+                } else {
+                    scoreClass = 'poor';
+                    scoreMessage = `You scored ${correctCount} out of ${totalQuestions} (${percentage}%). Review the material and try again.`;
+                }
+                
+                scoreDisplay.textContent = scoreMessage;
+                scoreDisplay.className = 'score-display ' + scoreClass;
+                scoreDisplay.style.display = 'block';
+                
+                // Scroll to score display
+                scoreDisplay.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+    </script>
+</body>
+</html>
